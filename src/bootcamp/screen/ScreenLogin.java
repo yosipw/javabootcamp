@@ -1,17 +1,21 @@
-package javabootcamp;
+package screen;
 
 import java.util.Map;
 
-public class LoginScreen implements Screen {
+import entity.Account;
+import entitydata.AccountDAO;
+
+public class ScreenLogin extends AbstractScreen {
 	private String accountNumber = "";
 	private String pin = "";
-	private boolean isComplete = false;
 
 	@Override
-	public void printString() {
+	public void printMessage() {
 		if (accountNumber.isEmpty()) {
+			System.out.println("--------------------------");
 			System.out.println("Enter Account Number: ");
 		} else if (pin.isEmpty()) {
+			System.out.println("--------------------------");
 			System.out.println("Enter Pin: ");
 		}
 	}
@@ -19,19 +23,23 @@ public class LoginScreen implements Screen {
 	private boolean validate(String value) {
 		if (accountNumber.isEmpty()) {
 			if (value.length() != 6){
+				System.out.println("--------------------------");
 				System.out.println("Account Number should have 6 digits length");
 				return false;
 			} 
 			else if (!value.matches("[0-9]+")) {
+				System.out.println("--------------------------");
 				System.out.println("Account Number should only contains numbers");
 				return false;
 			} 
 		} else if (pin.isEmpty()) {
 			if (value.length() != 6){
+				System.out.println("--------------------------");
 				System.out.println("Pin should have 6 digits length");
 				return false;
 			} 
 			else if (!value.matches("[0-9]+")) {
+				System.out.println("--------------------------");
 				System.out.println("Pin should only contains numbers");
 				return false;
 			} 
@@ -42,27 +50,30 @@ public class LoginScreen implements Screen {
 	
 	private boolean validateLogin(){
 		 if (!accountNumber.isEmpty() && !pin.isEmpty()) {
-				Map<String, Account> accountList = Accounts.getAccounts();
+				Map<String, Account> accountList = AccountDAO.getAccounts();
 				Account acc = accountList.get(accountNumber);
 				
 				if(acc == null || !pin.equals(acc.getPin())) {
+					System.out.println("--------------------------");
 					System.out.println("Invalid Account Number/PIN");
 					accountNumber = "";
 					pin = "";
 					return false;
 				}
 
-				Accounts.setActiveUser(acc);
+				AccountDAO.setActiveUser(acc);
 			}
 		 return true;
 	}
 
 	@Override
-	public void inputString(String value) {
+	public void readInput(String value) {
 		
 		boolean valid = validate(value);
 		
 		if (!valid){
+			pin = "";
+			accountNumber = "";
 			return;
 		}
 		
@@ -75,29 +86,17 @@ public class LoginScreen implements Screen {
 		valid = validateLogin();
 		
 		if (!accountNumber.isEmpty() && !pin.isEmpty() && valid){
-			isComplete = true;
-			Account acc = Accounts.getActiveUser();
-			
+			toPage = EnumScreen.TRANSACTION;
+			Account acc = AccountDAO.getActiveUser();
+
+			System.out.println("--------------------------");
 			System.out.println("active user account :" + acc.getAccountNumber());
 			System.out.println("active user name :" + acc.getName());
 			System.out.println("balance :$" + acc.getBalance());
+			
+			pin = "";
+			accountNumber = "";
 		}
-	}
-
-	@Override
-	public void runPage() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public ScreenName changePage() {
-
-		if(isComplete) {
-			return ScreenName.TRANSACTION;
-		}
-		return null;
-		
 	}
 
 }

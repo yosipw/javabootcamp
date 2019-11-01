@@ -1,4 +1,9 @@
-package javabootcamp;
+package entity;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class Account {
 	
@@ -6,13 +11,14 @@ public class Account {
 	private String pin;
 	private Integer balance;
 	private String accountNumber;
-	
+	private List<Transaction> transactionList;
 	public Account(String name, String pin, Integer balance, String accountNumber) {
 		super();
 		this.name = name;
 		this.pin = pin;
 		this.balance = balance;
 		this.accountNumber = accountNumber;
+		transactionList = new ArrayList();
 	}
 	public String getName() {
 		return name;
@@ -38,6 +44,19 @@ public class Account {
 	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
-	
-	
+	public List<Transaction> getTransactionList() {
+		return transactionList;
+	}
+	public void setTransactionList(List<Transaction> transactionList) {
+		this.transactionList = transactionList;
+	}
+	public void addTransaction(Transaction transaction){
+		transactionList.add(transaction);
+	}
+	public Transaction getLastTransaction(){
+		if(!transactionList.isEmpty()){
+			return transactionList.get(transactionList.size()-1);
+		}
+		return new Transaction(0, LocalDate.now());
+	}
 }
