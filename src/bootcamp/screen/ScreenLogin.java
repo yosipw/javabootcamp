@@ -1,9 +1,9 @@
-package screen;
+package bootcamp.screen;
 
 import java.util.Map;
 
-import entity.Account;
-import entitydata.AccountDAO;
+import bootcamp.dao.AccountDAO;
+import bootcamp.entity.Account;
 
 public class ScreenLogin extends AbstractScreen {
 	private String accountNumber = "";
@@ -20,6 +20,12 @@ public class ScreenLogin extends AbstractScreen {
 		}
 	}
 	
+	/**
+	 * @param value
+	 * @return
+	 * Validate the account number/pin that has to have 6 digit length,
+	 * has only contain number and
+	 */
 	private boolean validate(String value) {
 		if (accountNumber.isEmpty()) {
 			if (value.length() != 6){
@@ -48,6 +54,10 @@ public class ScreenLogin extends AbstractScreen {
 		return true;
 	}
 	
+	/**
+	 * @return
+	 * Validate the account number and the pin
+	 */
 	private boolean validateLogin(){
 		 if (!accountNumber.isEmpty() && !pin.isEmpty()) {
 				Map<String, Account> accountList = AccountDAO.getAccounts();
@@ -67,7 +77,7 @@ public class ScreenLogin extends AbstractScreen {
 	}
 
 	@Override
-	public void readInput(String value) {
+	public void readInput(String value)  {
 		
 		boolean valid = validate(value);
 		

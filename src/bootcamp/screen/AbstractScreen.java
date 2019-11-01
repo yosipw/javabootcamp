@@ -1,6 +1,10 @@
-package screen;
+package bootcamp.screen;
 
-public abstract class AbstractScreen implements InterfaceScreen {
+/**
+ * @author Yosua_S
+ *
+ */
+public abstract class AbstractScreen implements InterfaceScreenAction {
 	
 	protected EnumScreen toPage;
 

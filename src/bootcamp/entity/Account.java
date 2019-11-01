@@ -1,10 +1,13 @@
-package entity;
+package bootcamp.entity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+/**
+ * @author Yosua_S
+ *
+ */
 public class Account {
 	
 	private String name;
@@ -58,5 +61,10 @@ public class Account {
 			return transactionList.get(transactionList.size()-1);
 		}
 		return new Transaction(0, LocalDate.now());
+	}
+	@Override
+	public String toString() {
+		return "Account [name=" + name + ", pin=" + pin + ", balance=" + balance + ", accountNumber=" + accountNumber
+				+ ", transactionList=" + transactionList + "]";
 	}
 }

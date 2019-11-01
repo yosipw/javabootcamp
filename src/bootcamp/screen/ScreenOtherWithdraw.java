@@ -1,11 +1,15 @@
-package screen;
+package bootcamp.screen;
 
 import java.time.LocalDate;
 
-import entity.Account;
-import entity.Transaction;
-import entitydata.AccountDAO;
+import bootcamp.dao.AccountDAO;
+import bootcamp.entity.Account;
+import bootcamp.entity.Transaction;
 
+/**
+ * @author Yosua_S
+ *
+ */
 public class ScreenOtherWithdraw extends AbstractScreen {
 
 	@Override
@@ -48,6 +52,7 @@ public class ScreenOtherWithdraw extends AbstractScreen {
 		balance-= credit;
 		acc.setBalance(balance);
 		acc.addTransaction(new Transaction(credit, LocalDate.now()));
+		AccountDAO.saveAccount(acc);
 		AccountDAO.setActiveUser(acc);
 		toPage = EnumScreen.SUMMARY;
 	}

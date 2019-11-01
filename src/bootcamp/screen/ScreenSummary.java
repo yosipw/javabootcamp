@@ -1,10 +1,14 @@
-package screen;
+package bootcamp.screen;
 
 import java.time.LocalDate;
 
-import entity.Account;
-import entitydata.AccountDAO;
+import bootcamp.dao.AccountDAO;
+import bootcamp.entity.Account;
 
+/**
+ * @author Yosua_S
+ *
+ */
 public class ScreenSummary extends AbstractScreen {
 	
 	@Override

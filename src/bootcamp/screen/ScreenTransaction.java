@@ -1,5 +1,9 @@
-package screen;
+package bootcamp.screen;
 
+/**
+ * @author Yosua_S
+ *
+ */
 public class ScreenTransaction extends AbstractScreen {
 
 	@Override

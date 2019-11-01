@@ -1,11 +1,15 @@
-package screen;
+package bootcamp.screen;
 
 import java.time.LocalDate;
 
-import entity.Account;
-import entity.Transaction;
-import entitydata.AccountDAO;
+import bootcamp.dao.AccountDAO;
+import bootcamp.entity.Account;
+import bootcamp.entity.Transaction;
 
+/**
+ * @author Yosua_S
+ *
+ */
 public class ScreenFundTransfer extends AbstractScreen {
 	enum Step {
 		DESTINATION,AMOUNT,REFERENCE,SUMMARY,CONFIRM
@@ -59,6 +63,7 @@ public class ScreenFundTransfer extends AbstractScreen {
 		}
 	}
 
+	
 	@Override
 	public void readInput(String value) {
 		boolean isValid = false;
@@ -94,12 +99,6 @@ public class ScreenFundTransfer extends AbstractScreen {
 		case CONFIRM:
 			
 			switch(value){
-			case "":
-				credit = "";
-				referenceNumber = "";
-				destinationAccount = "";
-				step = Step.DESTINATION;
-				break;
 			case "1":
 				int creditVal = Integer.parseInt(credit);
 				Account acc = AccountDAO.getActiveUser();
@@ -108,14 +107,17 @@ public class ScreenFundTransfer extends AbstractScreen {
 				acc.setBalance(balance);
 				acc.addTransaction(new Transaction(creditVal, LocalDate.now()));
 				AccountDAO.setActiveUser(acc);
+				AccountDAO.saveAccount(acc);
 
 				Account destAcc = AccountDAO.accountByAccountNumber(destinationAccount);
 				balance = destAcc.getBalance();
 				balance+= creditVal;
 				destAcc.setBalance(balance);
+				AccountDAO.saveAccount(destAcc);
 
 				step = Step.SUMMARY;
 				break;
+			case "":
 			case "2":
 				credit = "";
 				referenceNumber = "";
@@ -146,6 +148,10 @@ public class ScreenFundTransfer extends AbstractScreen {
 		}
 	}
 	
+	/**
+	 * @return
+	 * Generate random number as the reference number
+	 */
 	private String generateRandomNumbers(){
 		int n = 6;
         String AlphaNumericString = "0123456789"; 
@@ -162,6 +168,12 @@ public class ScreenFundTransfer extends AbstractScreen {
         return sb.toString(); 
 	}
 	
+	/**
+	 * @param destination
+	 * @return
+	 * Validate the account when it is not a number or
+	 * the targeted account was not exist
+	 */
 	private boolean validateAccount(String destination) {
 		try{
 			Integer.parseInt(destination);
@@ -180,6 +192,14 @@ public class ScreenFundTransfer extends AbstractScreen {
 		return true;
 	}
 	
+	/**
+	 * @param credit
+	 * @return
+	 * Validate credit input when it is not a number,
+	 * more than 100,
+	 * less than 0,
+	 * or the balance is less than the credit amount
+	 */
 	private boolean validateCredit(String credit){
 		int creditVal = 0;
 		try{

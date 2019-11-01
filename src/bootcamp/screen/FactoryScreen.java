@@ -1,9 +1,19 @@
-package screen;
+package bootcamp.screen;
 
+/**
+ * @author Yosua_S
+ *
+ */
 public class FactoryScreen {
 	
-	public InterfaceScreen getScreen(EnumScreen screenName) {
-		InterfaceScreen screen = null;
+	/**
+	 * @param screenName
+	 * @return
+	 * populate the screen based on the EnumScreen name
+	 * Print a message when the page not found
+	 */
+	public InterfaceScreenAction setCurrentScreen(EnumScreen screenName) {
+		InterfaceScreenAction screen = null;
 		switch(screenName) {
 		
 		case TRANSACTION: 

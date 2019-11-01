@@ -1,8 +1,12 @@
-package entity;
+package bootcamp.entity;
 
 import java.time.LocalDate;
 import java.util.Date;
 
+/**
+ * @author Yosua_S
+ *
+ */
 public class Transaction {
 	private int amount;
 	private LocalDate date;

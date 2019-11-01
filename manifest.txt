@@ -1,0 +1,4 @@
+Manifest-version: 1.0
+Main-Class: bootcamp.runner.Main
+Class-Path: commons-csv-1.4.jar
+Created-By: 1.0 (Macagua Corporation)
