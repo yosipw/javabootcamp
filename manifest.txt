@@ -1,3 +1,0 @@
-Manifest-version: 1.0
-Main-Class: bootcamp.runner
-Created-By: 1.0 (Yossi)
